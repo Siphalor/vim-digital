@@ -1,0 +1,117 @@
+*vim-digital.txt*	For Vim version 7.2 and above	Last change: 2020 Nov 17
+
+				VIM-DIGITAL MANUAL    by Siphalor
+
+This file is licensed as MIT (c) 2020 Siphalor.
+
+==============================================================================
+1. Contents									  *vim-digital* *vim-digital-contents*
+
+    1. Contents ..........................: |vim-digital-contents|
+    2. About .............................: |vim-digital-about|
+    3. Setup .............................: |vim-digital-setup|
+    4. Features ..........................: |vim-digital-features|
+		Auto clearing ....................: |vim-digital-auto-clear|
+    5. Configuration .....................: |vim-digital-config|
+
+==============================================================================
+2. About													 *vim-digital-about*
+
+Vim-Digital is a plugin to allow easy interactions with hneemann's Digital and
+Assembler.
+It can compile your ASM file and interface with Digital to run and debug it.
+For more information about Digital and Assembler see their GitHub sites:
+	https://github.com/hneemann/Digital
+	https://github.com/hneemann/Assembler
+
+==============================================================================
+3. Setup													 *vim-digital-setup*
+
+To setup this plugin copy the main directory into your a package in your
+"pack" directory of your |rtp| (See |packages|).
+
+Alternatively or for Vim versions prior to Vim 7 you may want to choose a
+plugin manager like pathogen or Vundle.
+
+For the final step of setup you need to point this plugin to the asm3.jar of
+the Assembler.  This can be done by setting |g:digital_asm3_jar| in your
+|.vimrc| file.
+
+==============================================================================
+4. Features												  *vim-digital-features*
+
+:DigitalAsmCompile											*:DigitalAsmCompile*
+
+	This command will run the assemler specified by |g:digital_asm3_jar|.
+
+:DigitalAsmCompileAndRun							  *:DigitalAsmCompileAndRun*
+:DigitalAsmCompileAndDebug							*:DigitalAsmCompileAndDebug*
+
+	Both of these commands will first try to run |:DigitalAsmCompile|. if that
+	is successful |:DigitalProcessorStart| or |:DigitalProcessorDebug| will be
+	executed respectively.
+
+:DigitalProcessorStart									*:DigitalProcessorStart*
+
+	This command tries to locate a generated .hex file and then passes that to
+	Digital and starts the simulation.
+
+:DigitalProcessorStop									 *:DigitalProcessorStop*
+
+	This command stops the current simulation of Digital. It will also end
+	debug mode if the simulation was started with |:DigitalProcessorDebug|.
+	It also triggers the |digital-auto-clear|.
+
+:DigitalProcessorDebug									*:DigitalProcessorDebug*
+
+	Running this command will start the Digital simulation in debug mode.
+	The plugin will highlight the current line with the syntax highlighting
+	specified for DbgCurrentLine.
+
+:DigitalProcessorStep									 *:DigitalProcessorStep*
+
+	In debug mode this command will do a step forward in the assembly code.
+
+:DigitalProcessorContinue							 *:DigitalProcessorContinue*
+
+	In debug mode this command will continue normal program execution until
+	the simulation encounters a BRK opcode.
+
+Auto Clearing											*vim-digital-auto-clear*
+
+	When running |:DigitalProcessorStop| or exiting from an .asm file the
+	plugin will trigger an "auto clear".
+	Based on the variables |g:digital_auto_clear_tmp_files| and
+	|g:digital_auto_clear_hex_file| generated files like .map, .lst and the
+	assembled .hex files may be deleted.
+
+==============================================================================
+5. Configuration											*vim-digital-config*
+
+g:digital_asm3_jar											*g:digital_asm3_jar*
+
+	This variable specifies the path to the asm3.jar of the Assembler. This
+	variable must be set to use this plugin.
+
+	Example: >
+	
+	:let g:digital_asm3_jar='$HOME/Assembler/asm3.jar'
+
+g:digital_auto_clear_tmp_files					*g:digital_auto_clear_tmp_files*
+	
+	When this variable is set to 1 the .map and .lst files that are generated
+	by the Assembler will automatically get deleted on these auto clear
+	events. See |vim-digital-auto-clear|.
+	This option is enabled by default.
+
+g:digital_auto_clear_hex_file					 *g:digital_auto_clear_hex_file*
+
+	Similarly to |g:digital_auto_clear_tmp_files| this will delete the
+	assembled .hex files on all auto clear events. See |vim-digital-auto-clear|.
+	This option is disabled by default.
+
+	Example: >
+
+	:let g:digital_auto_clear_hex_file=1
+
+vim:tw=78:ts=4:noet:ft=help
