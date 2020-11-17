@@ -60,7 +60,6 @@ the Assembler.  This can be done by setting |g:digital_asm3_jar| in your
 
 	This command stops the current simulation of Digital. It will also end
 	debug mode if the simulation was started with |:DigitalProcessorDebug|.
-	It also triggers the |digital-auto-clear|.
 
 :DigitalProcessorDebug									*:DigitalProcessorDebug*
 
@@ -79,8 +78,7 @@ the Assembler.  This can be done by setting |g:digital_asm3_jar| in your
 
 Auto Clearing											*vim-digital-auto-clear*
 
-	When running |:DigitalProcessorStop| or exiting from an .asm file the
-	plugin will trigger an "auto clear".
+	When exiting from an .asm file the plugin will trigger an "auto clear".
 	Based on the variables |g:digital_auto_clear_tmp_files| and
 	|g:digital_auto_clear_hex_file| generated files like .map, .lst and the
 	assembled .hex files may be deleted.

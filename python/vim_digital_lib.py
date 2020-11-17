@@ -167,13 +167,6 @@ def stop_asm_program():
     _close_socket(sock)
     path = _get_asm_file_path(_get_raw_file_path())
     _clear_current_debug_line(path)
-
-    if vim.eval('g:digital_auto_clear_tmp_files').strip() != '0':
-        _clear_tmp_files(_get_file_path())
-    if vim.eval('g:digital_auto_clear_hex_file').strip() != '0':
-        path = _get_hex_file_path(_get_file_path())
-        if os.path.isfile(path):
-            os.remove(path)
     return res
 
 def run_auto_clear():
