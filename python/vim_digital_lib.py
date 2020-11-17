@@ -119,6 +119,7 @@ def run_asm_program():
     if not os.path.isfile(path):
         _print_error('Unable to find hex file: ' + path)
         return
+    sock.settimeout(30)
     sock.send(_prepare_message('start:' + path))
     res = _process_reply(sock, 'Run started')
     _close_socket(sock)
@@ -150,11 +151,12 @@ def step_asm_program():
 
 def continue_asm_program():
     sock = _create_socket()
+    sock.settimeout(30)
     sock.send(_prepare_message('run'))
     res = _process_reply(sock, 'Failed to perform debug continue')
     if type(res) == str:
         path = _get_asm_file_path(_get_raw_file_path())
-        _update_current_debug_addr(path, int(res))
+        _update_current_debug_addr(path, int(res, 16))
     _close_socket(sock)
     return res
 
