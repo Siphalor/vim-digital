@@ -60,7 +60,7 @@ def _process_reply(sock: socket.socket, success_message: str):
             return reply[3:]
         return True
     else:
-        print(reply)
+        print('An error occured: ' + reply)
         return False
 
 def _get_asm3_path():
@@ -153,7 +153,7 @@ def continue_asm_program():
     sock = _create_socket()
     sock.settimeout(30)
     sock.send(_prepare_message('run'))
-    res = _process_reply(sock, 'Failed to perform debug continue')
+    res = _process_reply(sock, 'Continue successful!')
     if type(res) == str:
         path = _get_asm_file_path(_get_raw_file_path())
         _update_current_debug_addr(path, int(res, 16))
