@@ -134,7 +134,7 @@ def debug_asm_program():
     res = _process_reply(sock, 'Debugging started')
     if type(res) == str:
         path = _get_asm_file_path(_get_raw_file_path())
-        _update_current_debug_addr(path, int(res))
+        _update_current_debug_addr(path, int(res, 16))
     _close_socket(sock)
     return res
 
@@ -144,7 +144,7 @@ def step_asm_program():
     res = _process_reply(sock, 'Step successful!')
     if type(res) == str:
         path = _get_asm_file_path(_get_raw_file_path())
-        _update_current_debug_addr(path, int(res))
+        _update_current_debug_addr(path, int(res, 16))
     _close_socket(sock)
     return res
 
